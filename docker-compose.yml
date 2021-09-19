@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=watask123
+      - POSTGRES_DB=watask
+    volumes:
+      - pgdata:/data/postgres
+  app:
+    build: .
+    container_name: watask
+    ports:
+      - 3344:3333
+    volumes:
+      - .:/usr/app
+    links:
+      - db
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+    driver: local

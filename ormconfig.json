@@ -1,0 +1,13 @@
+{
+    "type": "postgres",
+    "port": 5432,
+    "host": "db",
+    "username": "root",
+    "password": "watask123",
+    "database": "watask",
+    "migrations": ["./src/database/migrations/*.ts"],
+    "entities": ["./src/modules/**/entities/*.ts"],
+    "cli": {
+      "migrationsDir": "./src/database/migrations"
+    }
+}
