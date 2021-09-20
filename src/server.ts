@@ -13,6 +13,8 @@ import { UsersRepository } from './modules/accounts/repositories/implementations
 import { IUsersRepository } from './modules/accounts/repositories/IUsersRepository';
 import { router } from "./routes";
 import { AppError } from "./errors/AppError";
+import { ITaskRepository } from "./modules/tasks/repositories/ITasksRepository";
+import { TasksRepository } from "./modules/tasks/repositories/implementations/TasksRepository";
 
 app.use(express.json());
 app.use(cors());
@@ -22,6 +24,11 @@ app.use(router)
 container.registerSingleton<IUsersRepository>(
     'UsersRepository',
     UsersRepository
+)
+
+container.registerSingleton<ITaskRepository>(
+    'TasksRepository',
+    TasksRepository
 )
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction)=> {
