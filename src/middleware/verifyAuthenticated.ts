@@ -19,13 +19,10 @@ export async function verifyAuthenticated(request: Request, response: Response, 
     try {
         const { sub: user_id } = verify(token, '615848992fe3067630420fd0cc12e4e4') as IPayload;
 
-        const usersRepository = new UsersRepository();
-        const user = await usersRepository.findById(user_id);
-
-        if (!user) {
-            throw new AppError('Usuário não existe', 401);
-        }
-
+        request.user = {
+            id: user_id,
+        };
+      
         next();
     } catch (error) {
         throw new AppError('Token ínválido', 401);
