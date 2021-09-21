@@ -16,6 +16,34 @@ class TasksRepository implements ITaskRepository {
 
         await this.repository.save(task);
     }
+
+    async update({ id, name, description, status, estimate }: ICreateTaskDTO): Promise<void> {
+        this.repository.update(id, {
+            name,
+            description,
+            status,
+            estimate
+        });
+    }
+
+    async list(user_id: string): Promise<Task[]> {
+        const tasks = await this.repository.find({
+            where: { user_id },
+            relations: ['user'], 
+            order: {
+                estimate: 'ASC'
+            }
+        });
+
+        return tasks;
+    }
+
+
+    async findById(id: string): Promise<Task> {
+        const task = await this.repository.findOne(id);
+
+        return task;
+    }
 }
 
 export { TasksRepository }
